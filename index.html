@@ -111,19 +111,29 @@
 
     <h2>Témoignages Clients</h2>
 
-    <div class="testimonial">
-        <p>"Service très professionnel et rapide. Je recommande vivement !"</p>
-        <strong>- Client PME</strong>
+    <div class="carousel">
+
+        <div class="testimonial active">
+            <p>"Service très professionnel et rapide. Je recommande vivement !"</p>
+            <strong>- Client PME</strong>
+        </div>
+
+        <div class="testimonial">
+            <p>"Très bon travail, mon suivi comptable est maintenant bien organisé."</p>
+            <strong>- Entrepreneur freelance</strong>
+        </div>
+
+        <div class="testimonial">
+            <p>"Excellent assistant virtuel, sérieux et efficace."</p>
+            <strong>- Startup client</strong>
+        </div>
+
     </div>
 
-    <div class="testimonial">
-        <p>"Très bon travail, mon suivi comptable est maintenant bien organisé."</p>
-        <strong>- Entrepreneur freelance</strong>
-    </div>
-
-    <div class="testimonial">
-        <p>"Excellent assistant virtuel, sérieux et efficace."</p>
-        <strong>- Startup client</strong>
+    <div class="dots">
+        <span class="dot active" onclick="showSlide(0)"></span>
+        <span class="dot" onclick="showSlide(1)"></span>
+        <span class="dot" onclick="showSlide(2)"></span>
     </div>
 
 </section>
@@ -133,6 +143,29 @@
 <footer>
     <p>&copy; 2026 Assistant Virtuel en Comptabilité. Tous droits réservés.</p>
 </footer>
+    <script>
+let currentIndex = 0;
+const slides = document.querySelectorAll(".testimonial");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        dots[i].classList.remove("active");
+    });
+
+    slides[index].classList.add("active");
+    dots[index].classList.add("active");
+
+    currentIndex = index;
+}
+
+// auto slide every 5 seconds
+setInterval(() => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    showSlide(currentIndex);
+}, 5000);
+    </script>
 
 </body>
 </html>
