@@ -263,31 +263,60 @@ footer {
 .temoignages {
     background: #0f172a;
     color: white;
-    padding: 40px;
-    border-radius: 16px;
+    padding: 50px 20px;
     text-align: center;
+    border-radius: 16px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.carousel {
+    position: relative;
+    min-height: 150px;
 }
 
 .testimonial {
-    background: rgba(255,255,255,0.08);
-    margin: 15px auto;
-    padding: 20px;
-    border-radius: 12px;
-    max-width: 600px;
-    transition: 0.3s;
+    display: none;
+    animation: fade 0.5s ease-in-out;
 }
 
-.testimonial:hover {
-    transform: translateY(-5px);
-    background: rgba(255,255,255,0.12);
+.testimonial.active {
+    display: block;
 }
 
 .testimonial p {
     font-style: italic;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
 }
 
 .testimonial strong {
-    display: block;
-    margin-top: 10px;
     color: #22c55e;
+}
+
+/* animation fade */
+@keyframes fade {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* dots */
+.dots {
+    margin-top: 20px;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    display: inline-block;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.4);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background: #22c55e;
+    transform: scale(1.2);
 }
