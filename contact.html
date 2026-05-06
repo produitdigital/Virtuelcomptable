@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Contactez-moi</h1>
+        <nav>
+            <a href="index.html">Accueil</a>
+            <a href="about.html">À Propos</a>
+            <a href="services.html">Services</a>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <img src="images/communication.webp" alt="Moyens de communication" class="responsive-img" width="800" height="600" itemprop="image"> 
+            <h2>Me Contacter</h2>
+            <p>Envoyer un Message</p>
+            <form action="https://formspree.io/f/mjkvojgb" method="POST">
+                <!-- Champ Nom -->
+                <label for="name">Nom :</label>
+                <input type="text" id="name" name="name" required>
+                
+                <!-- Champ Email -->
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" required>
+                
+                <!-- Champ Message -->
+                <label for="message">Message :</label>
+                <textarea id="message" name="message" required></textarea>
+                
+                <!-- Bouton Envoyer -->
+                <button type="submit">Envoyer</button>
+            </form>
+    </section>
+
+            <!-- Informations de Contact Directes -->
+            <div>
+                <h3>Ou me Contacter Directement</h3>
+                <p>Email : <a href="mailto:rjeantsioriniaina@gmail.com">rjeantsioriniaina@gmail.com</a></p>
+                <p>Téléphone : <a href="tel:+261 34 18 669 68">+261 34 18 669 68</a></p>
+                <p>Facebook : <a href="https://www.facebook.com/@hajatina.randrianantenaina/" target="_blank">Profil Facebook</a></p>
+                <p>LinkedIn : <a href="https://www.linkedin.com/in/jean-tsioriniaina-984998340" target="_blank">Profil LinkedIn</a></p>
+            </div>
+        </section>
+         <section> 
+            <h2>Notre Emplacement</h2> 
+            <img src="images/map.webp" alt="Carte de notre emplacement" class="responsive-img" width="800" height="600" itemprop="image"> 
+         </section>
+    </main>
+    <footer>
+    <p>&copy; 2024 Mon Assistant Virtuel. Tous droits réservés.</p>
+    <p>Email : <a href="mailto:rjeantsioriniaina@gmail.com">rjeantsioriniaina@gmail.com</a></p>
+    <p>Téléphone : <a href="tel:+261 34 18 669 68">+261 34 18 669 68</a></p>
+    <p>Facebook : <a href="https://www.facebook.com/@hajatina.randrianantenaina/" target="_blank">Profil Facebook</a></p>
+    <p>LinkedIn : <a href="https://www.linkedin.com/in/jean-tsioriniaina-984998340" target="_blank">Profil LinkedIn</a></p>
+    </footer>
+</body>
+</html>
+
+    <!-- JavaScript pour le Formulaire -->
+    <script>
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            var form = event.target;
+            var formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "https://rjeantsioriniaina.github.io/AV-Comptable/merci.html";
+                } else {
+                    alert('Il y a eu une erreur lors de l\'envoi de votre message.');
+                }
+            }).catch(error => {
+                console.error('Erreur:', error);
+                alert('Il y a eu une erreur lors de l\'envoi de votre message.');
+            });
+        }
+    </script>
+</body>
+</html>
+
