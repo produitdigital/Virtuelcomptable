@@ -3,19 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merci</title>
+
+    <title>Merci | Message reçu - Assistant Virtuel Comptabilité</title>
+
+    <meta name="description" content="Merci pour votre message. Nous vous répondrons dans les plus brefs délais.">
+    <meta name="robots" content="noindex, follow">
+
     <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #f6f8fc;
+        }
+
+        .thank-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            max-width: 500px;
+        }
+
+        .check {
+            font-size: 60px;
+            color: #22c55e;
+            margin-bottom: 15px;
+        }
+
+        a.btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #2E86C1;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        a.btn:hover {
+            background: #1A5276;
+        }
+    </style>
 </head>
+
 <body>
-    <header>
-        <h1>Merci pour votre message !</h1>
-    </header>
-    <main>
-        <p>Nous avons bien reçu votre message et nous vous répondrons dans les plus brefs délais.</p>
-        <p>Retour à la <a href="index.html">page d'accueil</a>.</p>
-    </main>
-    <footer>
-        <p>&copy; 2024 Mon Assistant Virtuel. Tous droits réservés.</p>
-    </footer>
+
+<div class="thank-card">
+
+    <div class="check">✔</div>
+
+    <h1>Merci pour votre message !</h1>
+
+    <p>
+        Nous avons bien reçu votre demande.<br>
+        Nous vous répondrons dans les plus brefs délais.
+    </p>
+
+    <a href="index.html" class="btn">Retour à l'accueil</a>
+
+</div>
+
 </body>
 </html>
