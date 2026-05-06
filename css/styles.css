@@ -260,3 +260,34 @@ footer {
         gap: 10px;
     }
 }
+.temoignages {
+    background: #0f172a;
+    color: white;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.testimonial {
+    background: rgba(255,255,255,0.08);
+    margin: 15px auto;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 600px;
+    transition: 0.3s;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.12);
+}
+
+.testimonial p {
+    font-style: italic;
+}
+
+.testimonial strong {
+    display: block;
+    margin-top: 10px;
+    color: #22c55e;
+}
