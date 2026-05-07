@@ -1,110 +1,164 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact</title>
 
-    <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/styles.css">
 
-    <!-- Firebase -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+<style>
+body { font-family: Arial; }
 
-        // 🔥 CONFIG FIREBASE (TON PROJET VIRTUELCOMPTABLE)
-        const firebaseConfig = {
-            apiKey: "AIzaSyAqndA1abN4wy-uCTKyProhdxzm4_mR2Xk",
-            authDomain: "virtuel-comptable.firebaseapp.com",
-            projectId: "virtuel-comptable",
-            storageBucket: "virtuel-comptable.firebasestorage.app",
-            messagingSenderId: "192881285900",
-            appId: "1:192881285900:web:0b83de32611d1a72194729"
-        };
+/* 🔥 SPINNER */
+.spinner {
+  width:40px;
+  height:40px;
+  border:5px solid #ddd;
+  border-top:5px solid #6c63ff;
+  border-radius:50%;
+  animation: spin 1s linear infinite;
+  margin:auto;
+}
 
-        // Init Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
 
-        // Send message function
-        window.sendMessage = async function (event) {
-            event.preventDefault();
+/* loader box */
+#loader, #successBox {
+  display:none;
+  text-align:center;
+  margin-top:10px;
+}
 
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const message = document.getElementById("message").value;
+/* ✔ SUCCESS ANIMATION */
+.checkmark {
+  font-size:60px;
+  color:green;
+  animation: pop 0.5s ease-in-out;
+}
 
-            try {
-                await addDoc(collection(db, "contacts"), {
-                    name: name,
-                    email: email,
-                    message: message,
-                    createdAt: serverTimestamp()
-                });
+@keyframes pop {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+</style>
 
-                alert("✅ Message envoyé avec succès !");
-                document.getElementById("contactForm").reset();
+<script type="module">
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-            } catch (error) {
-                console.error("Erreur Firestore:", error);
-                alert("❌ Erreur lors de l'envoi du message.");
-            }
-        };
-    </script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAqndA1abN4wy-uCTKyProhdxzm4_mR2Xk",
+  authDomain: "virtuel-comptable.firebaseapp.com",
+  projectId: "virtuel-comptable",
+  storageBucket: "virtuel-comptable.firebasestorage.app",
+  messagingSenderId: "192881285900",
+  appId: "1:192881285900:web:0b83de32611d1a72194729"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// 🔥 ANTI-SPAM (limit click)
+let lastSendTime = 0;
+
+window.sendMessage = async function(event){
+  event.preventDefault();
+
+  const now = Date.now();
+  if(now - lastSendTime < 5000){
+    alert("⛔ Please wait 5 seconds before sending again");
+    return;
+  }
+  lastSendTime = now;
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const message = document.getElementById("message").value;
+
+  const btn = document.getElementById("sendBtn");
+  const loader = document.getElementById("loader");
+  const successBox = document.getElementById("successBox");
+
+  if(!name || !email || !message){
+    alert("Fill all fields");
+    return;
+  }
+
+  // show loader
+  btn.disabled = true;
+  loader.style.display = "block";
+  successBox.style.display = "none";
+
+  try {
+
+    await addDoc(collection(db, "contacts"), {
+      name,
+      email,
+      message,
+      createdAt: serverTimestamp()
+    });
+
+    // hide loader
+    loader.style.display = "none";
+
+    // show success animation
+    successBox.style.display = "block";
+
+    // reset form
+    document.getElementById("contactForm").reset();
+
+    // 🔥 AUTO REDIRECT AFTER 3 SEC
+    setTimeout(()=>{
+      window.location.href = "index.html";
+    }, 3000);
+
+  } catch (error) {
+    console.error(error);
+    alert("Error sending message ❌");
+  }
+
+  btn.disabled = false;
+};
+
+</script>
 
 </head>
 
 <body>
 
 <header>
-    <h1>Contactez-moi</h1>
-    <nav>
-        <a href="index.html">Accueil</a>
-        <a href="about.html">À Propos</a>
-        <a href="services.html">Services</a>
-    </nav>
+  <h1>Contact</h1>
 </header>
 
 <main>
 
-<section>
-    <h2>Me Contacter</h2>
+<form id="contactForm" onsubmit="sendMessage(event)">
 
-    <form id="contactForm" onsubmit="sendMessage(event)">
-        
-        <label>Nom :</label>
-        <input type="text" id="name" required>
+  <input type="text" id="name" placeholder="Name" required><br><br>
+  <input type="email" id="email" placeholder="Email" required><br><br>
+  <textarea id="message" placeholder="Message" required></textarea><br><br>
 
-        <label>Email :</label>
-        <input type="email" id="email" required>
+  <button id="sendBtn" type="submit">Envoyer</button>
 
-        <label>Message :</label>
-        <textarea id="message" required></textarea>
+  <!-- 🔥 LOADER -->
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Sending...</p>
+  </div>
 
-        <button type="submit">Envoyer</button>
-    </form>
-</section>
+  <!-- ✔ SUCCESS -->
+  <div id="successBox">
+    <div class="checkmark">✔</div>
+    <p>Message sent successfully!</p>
+  </div>
 
-<section class="contact-card">
-
-    <h2>📞 Me contacter</h2>
-
-    <p>📧 Email : <a href="mailto:rjeantsioriniaina@gmail.com">rjeantsioriniaina@gmail.com</a></p>
-
-    <p>📱 Téléphone : <a href="tel:+261380806430">+261 38 08 064 30</a></p>
-
-    <p>💬 WhatsApp : <a href="https://wa.me/261380806430" target="_blank">Envoyer un message</a></p>
-
-    <p>📍 Facebook : <a href="https://www.facebook.com/hajatina.randrianantenaina" target="_blank">Profil</a></p>
-
-</section>
+</form>
 
 </main>
-
-<footer>
-    <p>&copy; 2026 Assistant Virtuel en Comptabilité</p>
-</footer>
 
 </body>
 </html>
