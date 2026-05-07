@@ -12,19 +12,21 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-        // 🔥 CONFIG FIREBASE (REMPLACE ICI PAR TON PROJET)
+        // 🔥 CONFIG FIREBASE (TON PROJET VIRTUELCOMPTABLE)
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT.appspot.com",
-            messagingSenderId: "XXXX",
-            appId: "XXXX"
+            apiKey: "AIzaSyCP_DYHxq5YuWd59nxNFA9Ndz9HlUb2Kk",
+            authDomain: "virtuelcomptable.firebaseapp.com",
+            projectId: "virtuelcomptable",
+            storageBucket: "virtuelcomptable.appspot.com",
+            messagingSenderId: "895182788090",
+            appId: "1:895182788090:web:d6687d8d94effc69f98043"
         };
 
+        // Init Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Send message function
         window.sendMessage = async function (event) {
             event.preventDefault();
 
@@ -40,15 +42,12 @@
                     createdAt: serverTimestamp()
                 });
 
-                alert("Message envoyé avec succès !");
+                alert("✅ Message envoyé avec succès !");
                 document.getElementById("contactForm").reset();
 
-                // redirect optional
-                // window.location.href = "merci.html";
-
             } catch (error) {
-                console.error(error);
-                alert("Erreur lors de l'envoi du message.");
+                console.error("Erreur Firestore:", error);
+                alert("❌ Erreur lors de l'envoi du message.");
             }
         };
     </script>
@@ -85,7 +84,8 @@
         <button type="submit">Envoyer</button>
     </form>
 </section>
-    <section class="contact-card">
+
+<section class="contact-card">
 
     <h2>📞 Me contacter</h2>
 
@@ -97,7 +97,7 @@
 
     <p>📍 Facebook : <a href="https://www.facebook.com/hajatina.randrianantenaina" target="_blank">Profil</a></p>
 
-    </section>
+</section>
 
 </main>
 
