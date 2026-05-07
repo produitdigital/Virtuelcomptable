@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin Dashboard</title>
+  <title>Admin Dashboard PRO</title>
+
   <style>
-    table { width:100%; border-collapse: collapse; }
+    body { font-family: Arial; padding: 10px; }
+    table { width:100%; border-collapse: collapse; margin-top:10px; }
     th, td { border:1px solid #ccc; padding:8px; }
-    th { background:#333; color:white; }
+    th { background:#333; color:#fff; }
+    button { padding:5px; margin:2px; cursor:pointer; }
+    #pagination button { padding:5px 10px; }
+    .topbar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px; }
+    input { padding:6px; }
   </style>
 </head>
 
 <body>
 
-<h2>📊 Messages Dashboard</h2>
+<h2>📊 Admin Messages Dashboard PRO</h2>
 
-<input id="search" placeholder="Search email or name">
+<!-- 🔐 FILTER + SEARCH -->
+<div class="topbar">
+  <input id="search" placeholder="Search name/email">
+
+  <input type="date" id="dateFilter">
+
+  <button onclick="exportCSV()">📥 Export CSV</button>
+</div>
 
 <table>
   <thead>
@@ -21,6 +34,7 @@
       <th>Name</th>
       <th>Email</th>
       <th>Message</th>
+      <th>Date</th>
       <th>Action</th>
     </tr>
   </thead>
@@ -28,7 +42,10 @@
   <tbody id="data"></tbody>
 </table>
 
+<div id="pagination"></div>
+
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
 import {
   getFirestore,
@@ -37,6 +54,11 @@ import {
   deleteDoc,
   doc
 } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAqndA1abN4wy-uCTKyProhdxzm4_mR2Xk",
@@ -47,66 +69,164 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-const tbody = document.getElementById("data");
 let allData = [];
+let currentPage = 1;
+const pageSize = 10;
 
+// 🔥 RENDER TABLE
 function render(data){
+
+  const tbody = document.getElementById("data");
   tbody.innerHTML = "";
-  data.forEach(d => {
+
+  const start = (currentPage - 1) * pageSize;
+  const end = start + pageSize;
+
+  const pageData = data.slice(start, end);
+
+  pageData.forEach(d => {
     tbody.innerHTML += `
       <tr>
-        <td>${d.name}</td>
-        <td>${d.email}</td>
-        <td>${d.message}</td>
+        <td>${d.name || ""}</td>
+        <td>${d.email || ""}</td>
+        <td>${d.message || ""}</td>
+        <td>
+          ${
+            d.createdAt
+              ? new Date(d.createdAt.seconds * 1000).toLocaleString()
+              : ""
+          }
+        </td>
         <td>
           <button onclick="del('${d.id}')">Delete</button>
         </td>
       </tr>
     `;
   });
+
+  renderPagination(data);
 }
 
-// REAL-TIME 🔥
+// 🔥 REALTIME FIRESTORE
 onSnapshot(collection(db, "contacts"), (snap) => {
   allData = [];
+
   snap.forEach(docu => {
     allData.push({ id: docu.id, ...docu.data() });
   });
-  render(allData);
+
+  applyFilters();
 });
 
-// DELETE + CONFIRM MODAL SIMPLE
+// 🔍 SEARCH + DATE FILTER
+function applyFilters(){
+
+  const searchValue = document.getElementById("search").value.toLowerCase();
+  const dateValue = document.getElementById("dateFilter").value;
+
+  let filtered = allData;
+
+  // SEARCH
+  if(searchValue){
+    filtered = filtered.filter(d =>
+      (d.name || "").toLowerCase().includes(searchValue) ||
+      (d.email || "").toLowerCase().includes(searchValue)
+    );
+  }
+
+  // DATE FILTER
+  if(dateValue){
+    filtered = filtered.filter(d => {
+      if(!d.createdAt) return false;
+      const dDate = new Date(d.createdAt.seconds * 1000);
+      return dDate.toISOString().split("T")[0] === dateValue;
+    });
+  }
+
+  render(filtered);
+}
+
+// EVENTS
+document.getElementById("search").addEventListener("input", ()=>{
+  currentPage = 1;
+  applyFilters();
+});
+
+document.getElementById("dateFilter").addEventListener("change", ()=>{
+  currentPage = 1;
+  applyFilters();
+});
+
+// 🗑️ DELETE
 window.del = async function(id){
-  if(confirm("Are you sure ?")){
+  if(confirm("Delete this message?")){
     await deleteDoc(doc(db, "contacts", id));
   }
 }
 
-// SEARCH 🔍
-document.getElementById("search").addEventListener("input", (e)=>{
-  const value = e.target.value.toLowerCase();
+// 📄 PAGINATION
+function renderPagination(data){
 
-  const filtered = allData.filter(d =>
-    d.name.toLowerCase().includes(value) ||
-    d.email.toLowerCase().includes(value)
-  );
+  const container = document.getElementById("pagination");
+  container.innerHTML = "";
 
-  render(filtered);
-});
+  const totalPages = Math.ceil(data.length / pageSize);
 
-  import { getAuth, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+  for(let i=1; i<=totalPages; i++){
+    container.innerHTML += `
+      <button onclick="goToPage(${i})"
+      style="${i===currentPage?'background:black;color:white':''}">
+        ${i}
+      </button>
+    `;
+  }
+}
 
-const auth = getAuth(app);
+window.goToPage = function(page){
+  currentPage = page;
+  applyFilters();
+}
 
-// 🔐 CHECK LOGIN STATUS
+// 📥 EXPORT CSV
+window.exportCSV = function(){
+
+  let csv = "Name,Email,Message,Date\n";
+
+  allData.forEach(d => {
+    csv += `"${d.name || ""}","${d.email || ""}","${d.message || ""}","${
+      d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleString() : ""
+    }"\n`;
+  });
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "messages.csv";
+  a.click();
+
+  URL.revokeObjectURL(url);
+}
+
+// 🔐 SIMPLE ADMIN LOGIN (ROLE SYSTEM BASIC)
 onAuthStateChanged(auth, (user) => {
-    if (!user) {
-        alert("Accès refusé");
-        window.location.href = "login.html";
-    }
+
+  if(!user){
+    alert("Accès refusé");
+    window.location.href = "login.html";
+    return;
+  }
+
+  // ROLE CHECK (simple example)
+  if(user.email !== "rasolojean44@gmail.com"){
+    alert("Not admin");
+    window.location.href = "index.html";
+  }
 });
+
 </script>
 
 </body>
