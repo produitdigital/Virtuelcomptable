@@ -95,6 +95,18 @@ document.getElementById("search").addEventListener("input", (e)=>{
   render(filtered);
 });
 
+  import { getAuth, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+const auth = getAuth(app);
+
+// 🔐 CHECK LOGIN STATUS
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
+        alert("Accès refusé");
+        window.location.href = "login.html";
+    }
+});
 </script>
 
 </body>
