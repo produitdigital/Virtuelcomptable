@@ -221,19 +221,11 @@ onAuthStateChanged(auth, (user) => {
   }
 
   // ROLE CHECK (simple example)
-  const admins = [
-  "rasolojean44@gmail.com",
-  "rjeantsioriniaina@gmail.com"
-];
-  const roles = {
-  "rasolojean44@gmail.com": "superadmin",
-  "rjeantsioriniaina@gmail.com": "admin"
-};
-
-if (!admins.includes(user.email)) {
-  alert("Not admin");
-  window.location.href = "index.html";
+  if(user.email !== "rasolojean44@gmail.com"){
+alert("Not admin");
+window.location.href = "index.html";
 }
+});
 </script>
 
 </body>
