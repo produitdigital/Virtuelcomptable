@@ -221,26 +221,19 @@ onAuthStateChanged(auth, (user) => {
   }
 
   // ROLE CHECK (simple example)
-  onAuthStateChanged(auth, (user) => {
-
-  if (!user) {
-    alert("Accès refusé");
-    window.location.href = "login.html";
-    return;
-  }
-
   const admins = [
-    "rasolojean44@gmail.com",
-    "rjeantsioriniaina@gmail.com"
-  ];
+  "rasolojean44@gmail.com",
+  "rjeantsioriniaina@gmail.com"
+];
+  const roles = {
+  "rasolojean44@gmail.com": "superadmin",
+  "rjeantsioriniaina@gmail.com": "admin"
+};
 
-  const email = (user.email || "").trim().toLowerCase();
-
-  if (!admins.includes(email)) {
-    alert("Not admin");
-    window.location.href = "index.html";
-  }
-});
+if (!admins.includes(user.email)) {
+  alert("Not admin");
+  window.location.href = "index.html";
+}
 </script>
 
 </body>
