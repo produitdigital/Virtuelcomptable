@@ -45,28 +45,6 @@
                 alert("✅ Message envoyé avec succès !");
                 document.getElementById("contactForm").reset();
 
-                try {
-    await addDoc(collection(db, "contacts"), {
-        name: name,
-        email: email,
-        message: message,
-        createdAt: serverTimestamp()
-    });
-
-    alert("Message envoyé avec succès !");
-    document.getElementById("contactForm").reset();
-
-    // 📱 WHATSAPP NOTIFICATION
-    const phone = "261380806430";
-
-    const text = `📩 Nouveau message:\n\n👤 Nom: ${name}\n📧 Email: ${email}\n💬 Message: ${message}`;
-
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`);
-
-} catch (error) {
-    console.error(error);
-    alert("Erreur lors de l'envoi du message.");
-                }
 
             } catch (error) {
                 console.error("Erreur Firestore:", error);
