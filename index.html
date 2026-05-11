@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Assistant Virtuel en Comptabilité | Services Comptables Freelance Fiables</title>
+    <title>Assistant Virtuel Comptable | Comptabilité Freelance Professionnelle</title>
 
-    <meta name="description" content="Assistant virtuel en comptabilité : tenue de livre, rapprochement bancaire, écritures comptables, suivi clients et fournisseurs. Service professionnel et fiable.">
-    <meta name="author" content="Assistant Virtuel Comptabilité">
-    
+    <meta name="description" content="Assistant virtuel en comptabilité pour PME et entrepreneurs : tenue de livre, rapprochement bancaire, écritures comptables, suivi clients et fournisseurs. Service fiable et professionnel.">
+
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="https://virtuel-comptable.web.app/">
+
+    <meta name="author" content="Assistant Virtuel Comptable">
+
+    <!-- Open Graph SEO -->
+    <meta property="og:title" content="Assistant Virtuel Comptable">
+    <meta property="og:description" content="Services de comptabilité virtuelle professionnels pour entreprises et freelances.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://virtuel-comptable.web.app/">
+
     <link rel="icon" href="images/favicon.ico">
-
 
     <link rel="stylesheet" href="css/styles.css">
 
-  
+    <!-- Structured Data SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Assistant Virtuel Comptable",
+      "url": "https://virtuel-comptable.web.app",
+      "description": "Services de comptabilité virtuelle pour PME et entrepreneurs",
+      "areaServed": "Worldwide"
+    }
+    </script>
+
 </head>
 
 <body>
@@ -30,9 +52,14 @@
 
     <a href="contact.html" class="cta-button">📩 Demander un devis gratuit</a>
 
+    <a href="https://wa.me/261380806430" class="cta-button">
+        📲 Contact WhatsApp
+    </a>
+
     <nav class="navbar">
         <a href="services.html">SERVICES</a>
         <a href="about.html">À PROPOS</a>
+        <a href="blog.html">BLOG</a>
         <a href="contact.html">CONTACT</a>
     </nav>
 </header>
@@ -64,8 +91,6 @@
             Assistant virtuel spécialisé en comptabilité, j’aide les entreprises à optimiser leur gestion financière avec des solutions fiables et professionnelles.
         </p>
 
-        <p><strong>Outils maîtrisés :</strong></p>
-
         <h3>Pack Office</h3>
         <ul><li>Word, Excel, PowerPoint, Access, Outlook</li></ul>
 
@@ -73,7 +98,7 @@
         <ul><li>QuickBooks, ZohoBooks, Sage 100, Navision, Sage Saari</li></ul>
 
         <h3>Google Workspace</h3>
-        <ul><li>Gmail, Google Sheets, Drive, Calendar</ul>
+        <ul><li>Gmail, Google Sheets, Drive, Calendar</li></ul>
 
         <h3>Autres outils</h3>
         <ul><li>Canva, Trello, Notion</li></ul>
@@ -85,41 +110,49 @@
 
     <section class="temoignages">
 
-    <h2>Témoignages Clients</h2>
+        <h2>Témoignages Clients</h2>
 
-    <div class="carousel">
+        <div class="carousel">
 
-        <div class="testimonial active">
-            <p>"Service très professionnel et rapide. Je recommande vivement !"</p>
-            <strong>- Client PME</strong>
+            <div class="testimonial active">
+                <p>"Service très professionnel et rapide. Je recommande vivement !"</p>
+                <strong>- Client PME</strong>
+            </div>
+
+            <div class="testimonial">
+                <p>"Très bon travail, mon suivi comptable est maintenant bien organisé."</p>
+                <strong>- Entrepreneur freelance</strong>
+            </div>
+
+            <div class="testimonial">
+                <p>"Excellent assistant virtuel, sérieux et efficace."</p>
+                <strong>- Startup client</strong>
+            </div>
+
         </div>
 
-        <div class="testimonial">
-            <p>"Très bon travail, mon suivi comptable est maintenant bien organisé."</p>
-            <strong>- Entrepreneur freelance</strong>
+        <div class="dots">
+            <span class="dot active" onclick="showSlide(0)"></span>
+            <span class="dot" onclick="showSlide(1)"></span>
+            <span class="dot" onclick="showSlide(2)"></span>
         </div>
 
-        <div class="testimonial">
-            <p>"Excellent assistant virtuel, sérieux et efficace."</p>
-            <strong>- Startup client</strong>
-        </div>
+    </section>
 
-    </div>
-
-    <div class="dots">
-        <span class="dot active" onclick="showSlide(0)"></span>
-        <span class="dot" onclick="showSlide(1)"></span>
-        <span class="dot" onclick="showSlide(2)"></span>
-    </div>
-
-</section>
+    <section>
+        <h2>Pourquoi choisir mon service ?</h2>
+        <p>
+            Service fiable, rapide et adapté aux besoins des entreprises modernes. Optimisation de la gestion financière et réduction des erreurs comptables.
+        </p>
+    </section>
 
 </main>
 
 <footer>
     <p>&copy; 2026 Assistant Virtuel en Comptabilité. Tous droits réservés.</p>
 </footer>
-    <script>
+
+<script>
 let currentIndex = 0;
 const slides = document.querySelectorAll(".testimonial");
 const dots = document.querySelectorAll(".dot");
@@ -136,13 +169,11 @@ function showSlide(index) {
     currentIndex = index;
 }
 
-// auto slide every 5 seconds
 setInterval(() => {
     currentIndex = (currentIndex + 1) % slides.length;
     showSlide(currentIndex);
 }, 5000);
-    </script>
+</script>
 
 </body>
 </html>
-
