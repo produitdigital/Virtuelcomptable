@@ -1,22 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   <!-- Mise à jour pour forcer la réindexation par Google -->
+
+  <!-- HOME -->
   <url>
-    <loc>https://rjeantsioriniaina.github.io/AV-Comptable/</loc>
-    <lastmod>2024-11-22</lastmod>
+    <loc>https://virtuel-comptable.web.app/</loc>
+    <lastmod>2026-01-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-   <url>
-    <loc>https://rjeantsioriniaina.github.io/AV-Comptable/services.html</loc>
-    <lastmod>2024-11-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+
+  <!-- SERVICES -->
+  <url>
+    <loc>https://virtuel-comptable.web.app/services</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
-   <url>
-    <loc>https://rjeantsioriniaina.github.io/AV-Comptable/about.html</loc>
-    <lastmod>2024-11-22</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+
+  <!-- ABOUT -->
+  <url>
+    <loc>https://virtuel-comptable.web.app/about</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
- </urlset>
+
+  <!-- CONTACT -->
+  <url>
+    <loc>https://virtuel-comptable.web.app/contact</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- BLOG -->
+  <url>
+    <loc>https://virtuel-comptable.web.app/blog</loc>
+    <lastmod>2026-01-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+</urlset>
